@@ -1,37 +1,40 @@
+import PokemonCard from "@/components/PokemonCard";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 
 export default function Index() {
 
-  const [results, setResult] = useState<any[]>([]);
-  useEffect(() => {
-    console.log("Entre en pantalla");
-    getPokemons();
-  }, []);
-  const getPokemons = async () => {
-    try {
+  const [result, setResult] = useState<any[]>([]);
 
-      const URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
-      const response = await fetch(URL, {
-        method: "GET",
-      });
+  useEffect(() => {
+    getPokemon();
+  }, []);
+
+  const getPokemon = async () => {
+    try {
+      const URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
+      const response = await fetch(URL);
 
       if (response.ok) {
         const data = await response.json();
         setResult(data.results);
-      } else {
-        console.log("Bard Request");
       }
+
     } catch (error) {
-      console.log("Ocurrio un error");
+      console.log("error en la consulta");
     }
   };
-  return (
-    <View>
 
-      {results.map((item) => {
-        return <Text key={item.nam}> {item.name} </Text>;
+  return (
+    <ScrollView>
+      {result.map((item) => {
+        return <PokemonCard
+          key={item.name}
+          name={item.name}
+          url={item.url}
+        />;
       })}
-    </View>
+
+    </ScrollView>
   );
 }
