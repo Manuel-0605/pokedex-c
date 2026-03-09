@@ -2,9 +2,16 @@ import PokemonCard from "@/components/PokemonCard";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 
+
+interface Pokemon {
+  name: string;
+
+  url: string;
+}
+
 export default function Index() {
 
-  const [result, setResult] = useState<any[]>([]);
+  const [result, setResult] = useState<Pokemon[]>([]);
 
   useEffect(() => {
     getPokemon();

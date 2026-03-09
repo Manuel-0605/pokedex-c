@@ -1,12 +1,27 @@
 import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 export default function PokemonDetailsScreen() {
-    const parms = useLocalSearchParams();
+    const params = useLocalSearchParams();
+    const [pokemonData, setPokemonData] = useState(null);
+
+    useEffect(() => {
+        getPokemonData();
+    }, []);
+
+    const getPokemonData = async () => {
+        const URL = `https://pokeapi.co/api/v2/pokemon/${params.name}`;
+        const response = await fetch(URL);
+
+        const data = await response.json();
+        setPokemonData(data);
+    }
     return (
         <View>
-            <Text>{parms.name} </Text>
+
+            <Text>{params.name}</Text>
+            <Text>{JSON.stringify(pokemonData)}</Text>
         </View>
     )
 }

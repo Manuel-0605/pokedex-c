@@ -16,7 +16,7 @@ export default function PokemonCard(props: pokemonCardProps) {
 
     return (
         <Pressable
-            onPress={() => router.push("/newScreen")}
+            onPress={() => router.push(`/pokemon/${props.name}`)}
             style={({ pressed }) => [styles.PressableStyle,
             pressed && {
                 opacity: 0.5
